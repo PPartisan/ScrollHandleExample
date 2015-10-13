@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:id="@+id/rvf_drag_text_view"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:text="@string/drag_message_idle"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@id/rvf_drag_text_view"
+        android:background="@drawable/drop_shadow"/>
+
+    <com.werdpressed.partisan.scrollhandleexample.ConfigurableRecyclerView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/rvf_drag_text_view"
+        android:id="@+id/rvf_recycler_view" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_gravity="top"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/drop_shadow"/>
+
+</RelativeLayout>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Scroll Handle Example</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_lock">Lock</string>
+    <string name="action_unlock">Unlock</string>
+
+    <string name="drag_message_idle">Drag Here!</string>
+    <string name="drag_message_active">Dragging…</string>
+
+    <string name="cheeses">Cheeses</string>
+</resources>
