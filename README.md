@@ -1,5 +1,5 @@
 # ScrollHandleExample
-Demonstrates how to progammatically scroll a `RecyclerView` with a `TouchListener` assigned to a `View`. Although only a `RecyclerView` is shown in the code, the same method works just as well with `NestedScrollView`.
+Demonstrates how to progammatically scroll a `RecyclerView` by manipulating a `View` with an assigned `TouchListener`. Although only a `RecyclerView` is shown in the code, the same method works just as well with `NestedScrollView`.
 
 The method can be especially useful when constructing layouts that make use of `CollapsingToolbarLayout` from the Android Design Support Library. This is because layout elements beyond the `RecyclerView` can be added below the collapsing toolbar, yet still cause it to collapse and expand based on touch events in the same way as a `RecyclerView` or `NestedScrollView`.
 
