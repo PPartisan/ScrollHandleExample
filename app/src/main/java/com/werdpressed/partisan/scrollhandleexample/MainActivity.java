@@ -4,8 +4,10 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements AppBarManager{
@@ -68,6 +70,16 @@ public class MainActivity extends AppCompatActivity implements AppBarManager{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            float per = Math.abs(mAppBarLayout.getY()) / mAppBarLayout.getTotalScrollRange();
+            boolean setExpanded = (per <= 0.5F);
+            mAppBarLayout.setExpanded(setExpanded, true);
+        }
+        return super.dispatchTouchEvent(event);
     }
 
     private void makeToast(String content) {
