@@ -37,12 +37,6 @@ public class MainActivity extends AppCompatActivity implements AppBarManager{
     }
 
     @Override
-    protected void onResume() {
-        mRecyclerFragment.getLayoutManager().setAppBarManager(this);
-        super.onResume();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;

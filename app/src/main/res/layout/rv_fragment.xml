@@ -40,7 +40,9 @@
                 android:id="@+id/rvf_et"
                 android:hint="@string/rvf_scroll_to_value_et"
                 android:gravity="center"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:maxLength="3"
+                android:imeOptions="actionUnspecified"/>
 
         </LinearLayout>
 

@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,6 +51,8 @@ public class RecyclerFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
 
+        mLayoutManager.setAppBarManager((AppBarManager) getActivity());
+
         maxAdapterPosition = mAdapter.getItemCount() - 1;
 
         mDragTextView = (TextView) rootView.findViewById(R.id.rvf_drag_text_view);
@@ -74,6 +78,16 @@ public class RecyclerFragment extends Fragment {
         String scrollToEntryHintText = getString(R.string.rvf_scroll_to_value_et, maxAdapterPosition);
         mScrollToEntry = (EditText) rootView.findViewById(R.id.rvf_et);
         mScrollToEntry.setHint(scrollToEntryHintText);
+        mScrollToEntry.requestFocus();
+        mScrollToEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+                    mScrollToBtn.performClick();
+                }
+                return false;
+            }
+        });
 
         mScrollToBtn = (Button) rootView.findViewById(R.id.rvf_scroll_to_btn);
         mScrollToBtn.setOnClickListener(new View.OnClickListener() {
@@ -102,10 +116,6 @@ public class RecyclerFragment extends Fragment {
 
     public ConfigurableRecyclerView getConfigurableRecyclerView() {
         return mRecyclerView;
-    }
-
-    public RecyclerLayoutManager getLayoutManager() {
-        return mLayoutManager;
     }
 
     private void makeToast(String content) {
