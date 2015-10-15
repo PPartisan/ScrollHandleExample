@@ -5,7 +5,9 @@ import android.graphics.PointF;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 public class RecyclerLayoutManager extends LinearLayoutManager {
 
@@ -18,18 +20,21 @@ public class RecyclerLayoutManager extends LinearLayoutManager {
     @Override
     public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, int position) {
         View firstVisibleChild = recyclerView.getChildAt(0);
-        int childHeight = firstVisibleChild.getHeight();
+        final int visibleChildCount = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
+        final int childHeight = firstVisibleChild.getHeight();
         int distanceInPixels = ((findFirstVisibleItemPosition() - position) * childHeight);
         if (distanceInPixels == 0) {
             distanceInPixels = (int) Math.abs(firstVisibleChild.getY());
         }
 
-        if (position < findFirstVisibleItemPosition()) {
+        if (position <= visibleChildCount) {
+            //Scroll to the very top and expand the app bar
+            position = 0;
             mAppBarManager.expandAppBar();
-        } else if (position > findLastVisibleItemPosition()) {
+        } else {
             mAppBarManager.collapseAppBar();
         }
-
+Log.e("tag", "Pos is " + position);
         SmoothScroller smoothScroller = new SmoothScroller(recyclerView.getContext(), Math.abs(distanceInPixels), 1000);
         smoothScroller.setTargetPosition(position);
         startSmoothScroll(smoothScroller);
