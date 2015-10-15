@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements AppBarManager{
@@ -68,6 +69,17 @@ public class MainActivity extends AppCompatActivity implements AppBarManager{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //Auto snap the AppBar open or closed
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_UP) {
+            float percentage = Math.abs(mAppBarLayout.getY()) / (float) mAppBarLayout.getTotalScrollRange();
+            boolean setExpanded = (percentage <= 0.5F);
+            mAppBarLayout.setExpanded(setExpanded, true);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
     private void makeToast(String content) {
