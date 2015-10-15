@@ -5,7 +5,6 @@ import android.graphics.PointF;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 public class RecyclerLayoutManager extends LinearLayoutManager {
@@ -38,7 +37,6 @@ public class RecyclerLayoutManager extends LinearLayoutManager {
 
     @Override
     public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
-        //Log.e("TAG", "dY is " + dy);
         return super.scrollVerticallyBy(dy, recycler, state);
     }
 
