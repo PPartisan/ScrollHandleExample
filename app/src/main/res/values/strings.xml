@@ -9,4 +9,6 @@
     <string name="drag_message_active">Dragging…</string>
 
     <string name="cheeses">Cheeses</string>
+    <string name="rvf_scroll_to_value_et">Enter Value (0 to %1$d)</string>
+    <string name="rvf_scroll_btn_text">Scroll!</string>
 </resources>

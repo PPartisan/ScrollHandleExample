@@ -1,5 +1,6 @@
 package com.werdpressed.partisan.scrollhandleexample;
 
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -7,10 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AppBarManager{
 
     private Toolbar mToolbar;
     private RecyclerFragment mRecyclerFragment;
+    private AppBarLayout mAppBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+
         if (getSupportFragmentManager().findFragmentById(R.id.rv_container) == null) {
             mRecyclerFragment = RecyclerFragment.newInstance();
             getSupportFragmentManager()
@@ -28,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.rv_container, mRecyclerFragment, RecyclerFragment.TAG)
                     .commit();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        mRecyclerFragment.getLayoutManager().setAppBarManager(this);
+        super.onResume();
     }
 
     @Override
@@ -62,5 +72,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void makeToast(String content) {
         Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void collapseAppBar() {
+        mAppBarLayout.setExpanded(false, true);
+    }
+
+    @Override
+    public void expandAppBar() {
+        mAppBarLayout.setExpanded(true, true);
     }
 }

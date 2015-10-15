@@ -5,11 +5,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RecyclerFragment extends Fragment {
 
@@ -19,8 +24,13 @@ public class RecyclerFragment extends Fragment {
 
     private ConfigurableRecyclerView mRecyclerView;
     private RecyclerFragmentAdapter mAdapter;
+    private RecyclerLayoutManager mLayoutManager;
+
+    private int maxAdapterPosition;
 
     private TextView mDragTextView;
+    private EditText mScrollToEntry;
+    private Button mScrollToBtn;
 
     public static RecyclerFragment newInstance() {
         return new RecyclerFragment();
@@ -34,8 +44,12 @@ public class RecyclerFragment extends Fragment {
 
         mRecyclerView = (ConfigurableRecyclerView) rootView.findViewById(R.id.rvf_recycler_view);
         mAdapter = new RecyclerFragmentAdapter();
+        mLayoutManager = new RecyclerLayoutManager(getActivity());
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+
+        maxAdapterPosition = mAdapter.getItemCount() - 1;
 
         mDragTextView = (TextView) rootView.findViewById(R.id.rvf_drag_text_view);
         mDragTextView.setOnTouchListener(new View.OnTouchListener() {
@@ -57,10 +71,44 @@ public class RecyclerFragment extends Fragment {
             }
         });
 
+        String scrollToEntryHintText = getString(R.string.rvf_scroll_to_value_et, maxAdapterPosition);
+        mScrollToEntry = (EditText) rootView.findViewById(R.id.rvf_et);
+        mScrollToEntry.setHint(scrollToEntryHintText);
+
+        mScrollToBtn = (Button) rootView.findViewById(R.id.rvf_scroll_to_btn);
+        mScrollToBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int target;
+
+                try {
+                    target = Integer.valueOf(mScrollToEntry.getText().toString());
+                } catch (NumberFormatException e) {
+                    makeToast("Entry must be of type int");
+                    return;
+                }
+
+                if ((target < 0) || (target > mAdapter.getItemCount() - 1)) {
+                    makeToast("Entry must range from 0 to " + maxAdapterPosition);
+                    return;
+                }
+
+                mRecyclerView.smoothScrollToPosition(target);
+            }
+        });
+
         return rootView;
     }
 
     public ConfigurableRecyclerView getConfigurableRecyclerView() {
         return mRecyclerView;
+    }
+
+    public RecyclerLayoutManager getLayoutManager() {
+        return mLayoutManager;
+    }
+
+    private void makeToast(String content) {
+        Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT).show();
     }
 }

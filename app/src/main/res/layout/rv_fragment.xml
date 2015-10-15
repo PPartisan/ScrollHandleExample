@@ -4,24 +4,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:id="@+id/rvf_drag_text_view"
-        android:gravity="center"
-        android:textAllCaps="true"
-        android:text="@string/drag_message_idle"/>
+        android:orientation="horizontal"
+        android:id="@+id/rvf_header_parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/rvf_drag_text_view"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:text="@string/drag_message_idle"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:id="@+id/rvf_scroll_to_btn"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:text="@string/rvf_scroll_btn_text" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/rvf_et"
+                android:hint="@string/rvf_scroll_to_value_et"
+                android:gravity="center"
+                android:inputType="phone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:layout_below="@id/rvf_drag_text_view"
+        android:layout_below="@id/rvf_header_parent"
         android:background="@drawable/drop_shadow"/>
 
     <com.werdpressed.partisan.scrollhandleexample.ConfigurableRecyclerView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_below="@id/rvf_drag_text_view"
+        android:layout_below="@id/rvf_header_parent"
         android:id="@+id/rvf_recycler_view" />
 
     <View
