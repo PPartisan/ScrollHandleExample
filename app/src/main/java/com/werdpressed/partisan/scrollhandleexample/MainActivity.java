@@ -91,6 +91,14 @@ public class MainActivity extends AppCompatActivity implements AppBarManager{
 
     @Override
     public int getVisibleHeightForRecyclerViewInPx() {
-        return getWindow().getDecorView().getHeight() - mAppBarLayout.getHeight();
+
+        if (mRecyclerFragment == null) mRecyclerFragment =
+                (RecyclerFragment) getSupportFragmentManager().findFragmentByTag(RecyclerFragment.TAG);
+
+        int windowHeight, appBarHeight, headerViewHeight;
+        windowHeight = getWindow().getDecorView().getHeight();
+        appBarHeight = mAppBarLayout.getHeight();
+        headerViewHeight = mRecyclerFragment.getHeaderView().getHeight();
+        return windowHeight - (appBarHeight + headerViewHeight);
     }
 }

@@ -23,6 +23,7 @@ public class RecyclerFragment extends Fragment {
     public static final String TAG = "RecyclerFragment";
 
     private View rootView;
+    private View headerView;
 
     private ConfigurableRecyclerView mRecyclerView;
     private RecyclerFragmentAdapter mAdapter;
@@ -43,6 +44,8 @@ public class RecyclerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.rv_fragment, container, false);
+
+        headerView = rootView.findViewById(R.id.rvf_header_parent);
 
         mRecyclerView = (ConfigurableRecyclerView) rootView.findViewById(R.id.rvf_recycler_view);
         mAdapter = new RecyclerFragmentAdapter();
@@ -111,6 +114,10 @@ public class RecyclerFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    public View getHeaderView() {
+        return headerView;
     }
 
     public ConfigurableRecyclerView getConfigurableRecyclerView() {

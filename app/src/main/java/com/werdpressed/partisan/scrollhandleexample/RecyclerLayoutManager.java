@@ -32,7 +32,7 @@ public class RecyclerLayoutManager extends LinearLayoutManager {
         //Subtract one as adapter position 0 based
         final int visibleChildCount = visibleHeightForRecyclerView/childHeight - 1;
 
-        if (position < visibleChildCount) {
+        if (position <= visibleChildCount) {
             //Scroll to the very top and expand the app bar
             position = 0;
             mAppBarManager.expandAppBar();
