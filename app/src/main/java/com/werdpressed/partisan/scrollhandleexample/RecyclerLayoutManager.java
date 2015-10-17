@@ -7,11 +7,11 @@ import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 public class RecyclerLayoutManager extends LinearLayoutManager {
 
     private AppBarManager mAppBarManager;
+    private int visibleHeightForRecyclerView;
 
     public RecyclerLayoutManager(Context context) {
         super(context);
@@ -20,29 +20,29 @@ public class RecyclerLayoutManager extends LinearLayoutManager {
     @Override
     public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, int position) {
         View firstVisibleChild = recyclerView.getChildAt(0);
-        final int visibleChildCount = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
         final int childHeight = firstVisibleChild.getHeight();
         int distanceInPixels = ((findFirstVisibleItemPosition() - position) * childHeight);
         if (distanceInPixels == 0) {
             distanceInPixels = (int) Math.abs(firstVisibleChild.getY());
         }
+        //Called Once
+        if (visibleHeightForRecyclerView == 0) {
+            visibleHeightForRecyclerView = mAppBarManager.getVisibleHeightForRecyclerViewInPx();
+        }
+        //Subtract one as adapter position 0 based
+        final int visibleChildCount = visibleHeightForRecyclerView/childHeight - 1;
 
-        if (position <= visibleChildCount) {
+        if (position < visibleChildCount) {
             //Scroll to the very top and expand the app bar
             position = 0;
             mAppBarManager.expandAppBar();
         } else {
             mAppBarManager.collapseAppBar();
         }
-Log.e("tag", "Pos is " + position);
+
         SmoothScroller smoothScroller = new SmoothScroller(recyclerView.getContext(), Math.abs(distanceInPixels), 1000);
         smoothScroller.setTargetPosition(position);
         startSmoothScroll(smoothScroller);
-    }
-
-    @Override
-    public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
-        return super.scrollVerticallyBy(dy, recycler, state);
     }
 
     public void setAppBarManager(AppBarManager appBarManager) {

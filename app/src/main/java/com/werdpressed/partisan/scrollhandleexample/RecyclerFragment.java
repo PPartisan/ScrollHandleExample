@@ -78,7 +78,6 @@ public class RecyclerFragment extends Fragment {
         String scrollToEntryHintText = getString(R.string.rvf_scroll_to_value_et, maxAdapterPosition);
         mScrollToEntry = (EditText) rootView.findViewById(R.id.rvf_et);
         mScrollToEntry.setHint(scrollToEntryHintText);
-        mScrollToEntry.requestFocus();
         mScrollToEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

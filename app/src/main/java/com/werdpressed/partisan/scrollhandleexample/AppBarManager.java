@@ -8,5 +8,6 @@ public interface AppBarManager {
 
     void collapseAppBar();
     void expandAppBar();
+    int getVisibleHeightForRecyclerViewInPx();
 
 }

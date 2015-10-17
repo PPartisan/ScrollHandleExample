@@ -88,4 +88,9 @@ public class MainActivity extends AppCompatActivity implements AppBarManager{
     public void expandAppBar() {
         mAppBarLayout.setExpanded(true, true);
     }
+
+    @Override
+    public int getVisibleHeightForRecyclerViewInPx() {
+        return getWindow().getDecorView().getHeight() - mAppBarLayout.getHeight();
+    }
 }
